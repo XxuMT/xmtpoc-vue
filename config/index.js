@@ -3,6 +3,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const backEndUrl = process.env.BACKEND_URL || 'http://xmt.poc.com'
+const backEndPort = process.env.BACKEND_PORT ||8080
 
 module.exports = {
   dev: {
@@ -10,17 +12,25 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/wapi' : {
+        target: backEndUrl + backEndPort,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/wapi/' : '/wapi/'
+        }
+      }
+    },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: 'xmt.poc.com', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
